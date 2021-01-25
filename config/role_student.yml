@@ -249,7 +249,7 @@ development:
         parent:
         parent_id:
         site_controller_id: 31
-        url: "/response/pending_surveys"
+        url: "/survey_deployment/pending_surveys"
       27: &4 !ruby/object:Menu::Node
         content_page_id:
         controller_action_id: 36
