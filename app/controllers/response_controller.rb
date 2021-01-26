@@ -398,6 +398,10 @@ class ResponseController < ApplicationController
     end
   end
 
+  def pending_surveys
+    redirect_to controller: 'survey_deployment', action: 'pending_surveys'
+  end
+
   def init_answers(questions)
     questions.each do |q|
       # it's unlikely that these answers exist, but in case the user refresh the browser some might have been inserted.
