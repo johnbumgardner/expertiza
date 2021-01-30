@@ -406,6 +406,10 @@ class ResponseController < ApplicationController
     end
   end
 
+  def pending_surveys
+    redirect_to controller: 'survey_deployment', action: 'pending_surveys'
+  end
+
   # Creates a table to store total contribution for Cake question across all reviewers
   def store_total_cake_score
     @total_score = Hash.new
