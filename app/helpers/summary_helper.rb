@@ -251,7 +251,7 @@ module SummaryHelper
       round_score = sum_weight = 0.0
       criteria.each do |q|
         # include this score in the average round score if the weight is valid & q is criterion
-        if !q.weight.nil? and q.weight > 0 and q.type.eql?("Criterion")
+        if !q.weight.nil? and q.weight > 0 and q.type.eql?("Criterion") and avg_scores_by_criterion[q.txt].is_a? Numeric
           round_score += avg_scores_by_criterion[q.txt] * q.weight
           sum_weight += q.weight
         end
