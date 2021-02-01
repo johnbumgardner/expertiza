@@ -53,7 +53,7 @@ module SummaryHelper
     def summarize_reviews_by_criterion(assignment, summary_ws_url)
       self.summary = self.avg_scores_by_criterion = self.avg_scores_by_round = Array.new(assignment.rounds_of_reviews)
       rubric = get_questions_by_assignment(assignment)
-
+      nround = assignment.rounds_of_reviews
       (0..nround - 1).each do |round|
         self.avg_scores_by_round[round] = 0.0
         self.summary[round] = {}
