@@ -74,7 +74,7 @@ class ReviewResponseMap < ResponseMap
   def show_feedback(response)
     return unless self.response.any? and response
     map = FeedbackResponseMap.find_by(reviewed_object_id: response.id)
-    return map.response.last.display_as_html if map and map.response.any?
+    return map.response.last.display_as_html if map and map.response.any? and map.response.last.length > 5
   end
 
   def metareview_response_maps
