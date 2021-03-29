@@ -1,17 +1,16 @@
-FROM ruby:2.7.2 AS rails-toolbox
+FROM ruby:2.5
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+WORKDIR /myapp
+COPY Gemfile /myapp/Gemfile
+COPY Gemfile.lock /myapp/Gemfile.lock
+RUN bundle install
+COPY . /myapp
 
-ARG USER_ID
-ARG GROUP_ID
 
-RUN addgroup --gid $GROUP_ID user
-RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
 
-ENV INSTALL_PATH /opt/app
-RUN mkdir -p $INSTALL_PATH
 
-RUN gem install rails bundler
-RUN chown -R user:user $INSTALL_PATH
-WORKDIR $INSTALL_PATH
-
-USER $USER_ID
-CMD ["/bin/sh"]
+CMD ["rails", "server", "-b", "0.0.0.0"]
