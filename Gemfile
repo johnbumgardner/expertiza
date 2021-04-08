@@ -4,7 +4,7 @@ gem 'rails', '~> 5.0'
 
 ## Gems in Alphabetical Order
 gem 'activerecord-session_store'
-gem 'activesupport', '~> 4.2.11.1'
+gem 'activesupport', '~> 5.0.1.rc1'
 gem 'airbrake'
 gem 'awesome_nested_set'
 gem 'bind-it'
