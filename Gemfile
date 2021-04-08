@@ -4,6 +4,7 @@ gem 'rails', '~> 5.0'
 
 ## Gems in Alphabetical Order
 gem 'actionpack', '~> 5.0.1.rc1'
+gem 'activemodel', '~> 6.1', '>= 6.1.3.1'
 gem 'activerecord-session_store'
 gem 'activesupport', '~> 5.0.1.rc1'
 gem 'airbrake'
