@@ -1,6 +1,6 @@
 class CreateQualityFiltering < ActiveRecord::Migration
   def self.up
-    create_table "quality_filtering", :force => true do |t|
+    create_table "quality_filterings", :force => true do |t|
       
     end
   end
