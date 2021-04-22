@@ -454,9 +454,4 @@ FactoryBot.define do
     id 1
     name 'fake_site'
   end
-
-  factory :quality_filtering, class QualityFiltering do
-    id 1
-    tag_prompt_deployment {TagPromptDeployment.first || association(:tag_prompt_deployment)}
-  end
 end
