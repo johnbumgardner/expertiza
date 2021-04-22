@@ -1,4 +1,4 @@
-class QualityFiltering
+class QualityFiltering < ActiveRecord::Base
 	belongs_to :tag_prompt_deployment
 	FILTERING_METHODS = [:threshold_filter, :outlier_filter].freeze
 	def apply_filters(answers, filters)
