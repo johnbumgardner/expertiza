@@ -2,6 +2,7 @@ class TagPromptDeployment < ActiveRecord::Base
   belongs_to :tag_prompt
   belongs_to :assignment
   belongs_to :questionnaire
+  has_one :quality_filtering
 
   def tag_prompt
     TagPrompt.find(self.tag_prompt_id)
