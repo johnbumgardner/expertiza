@@ -29,37 +29,31 @@ class QualityFiltering < ActiveRecord::Base
 	end
 
   # Filter out all answers which is the outlier in their group
-	def self.apply_outlier_filter(answers, threshold) 
-    tag_prompt_deployments = TagPromptDeployment.where(id: self.tag_prompt_deployment_id)
-    teams = Team.where(parent_id: tag_prompt_deployments.assignment_id)
-    questions = Question.where(questionnaire_id: tag_prompt_deployments.questionnaire.id, type: tag_prompt_deployments.question_type)
-    outlier_user_ids = []
-    unless teams.empty? or questions.empty?
-      teams.each do |team|
-        users = TeamsUser.where(team_id: team.id).map(&:user)
-        users.each do |user|
-          tags = AnswerTag.where(tag_prompt_deployment_id: self.id, user_id: user.id, answer_id: answers.map(&:id))
-
-          outliers = 0
-          questions.each do |question|
-            answer = answers.where(question_id: question.id)
-            user_tag = tags.where(answer_id: answer.map(&:id))
-            teammates = users.select {|e| e != user}
-            unless teammates.empty?
-              teammates_tags = AnswerTag.where(tag_prompt_deployment_id: self.id, user_id: teammates.map(&:id), answer_id: answer.map(&:id))
-              if teammates_tags.uniq.size <= 1 && teammates_tags[0] != user_tag
-                outliers += 1
-              end
-            end
-          end
-          if outliers > threshold
-            outlier_user_ids.append(user.id)
-          end
+	def self.apply_outlier_filter(answers) 
+    unless answers.empty?
+      answers.each do |answer|
+        question = answer.question
+        response = answer.response
+        response_map = response.response_map
+        reviewer = response_map.reviewer
+        team = reviewer.team
+        teammates = team.participants
+        teammates.delete(reviewer) if teammates.include? reviewer && team.participants.count >= 3
+        tags_for_same_answer = []
+        teammates.each do |teammate| 
+          # compare reviewer with his teammates
+          user = teammate.user
+          # belong to one teammate 
+          tags_for_same_answer << AnswerTag.where(tag_prompt_deployment_id: tag_prompt_deployment.id, user_id: user.id, answer_id: answer.id).first
+        end
+        # tag_for_same_answer
+        # detect outliers based on each elements value
+        tag_in_question = AnswerTag.where(tag_prompt_deployment_id: tag_prompt_deployment.id, user_id: reviewer.user.id, answer_id: answer.id).first
+        if tags_for_same_answer.uniq.size <= 1 and tags_for_same_answer.first != tag_in_question
+          answer.remove(answer)
         end
       end
     end
-    answer_tags = tags.where{|answer_tag| answer_tag.user_id != outlier_user_ids}
-    answers = answers.select{|answer| answer.id != answer_tags.answer_id}
-		answers
-	end
+    answers
+  end
 end
