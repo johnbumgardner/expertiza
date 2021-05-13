@@ -17,6 +17,7 @@ class QualityFiltering < ActiveRecord::Base
         threshold = tag_prompt_deployment.answer_length_threshold
         answers = self.apply_threshold_filter(answers, threshold)
       when :outlier_filter
+        threshold = 5
         answers = self.apply_outlier_filter(answers, threshold)
     end
     answers
