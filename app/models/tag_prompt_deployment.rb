@@ -34,7 +34,9 @@ class TagPromptDeployment < ActiveRecord::Base
       teams.each do |team|
         responses_ids = team.all_responses.map(&:id)
         answers = Answer.where(question_id: questions_ids, response_id: responses_ids)
-        answers = answers.where("length(comments) > ?", self.answer_length_threshold.to_s) unless self.answer_length_threshold.nil?
+        # answers = answers.where("length(comments) > ?", self.answer_length_threshold.to_s) unless self.answer_length_threshold.nil?
+        filters = [:threshold_filter]
+        answers = QualityFiltering.apply_filters(answers, filters)
         answers_inferred_by_ml = answers.select {|answer| ReviewMetricsQuery.confident?(self.id, answer.id) }
         taggable_answers = answers - answers_inferred_by_ml
         users = TeamsUser.where(team_id: team.id).map(&:user)

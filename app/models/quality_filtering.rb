@@ -1,7 +1,7 @@
 class QualityFiltering < ActiveRecord::Base
 	belongs_to :tag_prompt_deployment
 	FILTERING_METHODS = [:threshold_filter, :outlier_filter].freeze
-	def apply_filters(answers, filters)
+	def self.apply_filters(answers, filters)
 		# Filters is a list of filters to apply, so [:threshold_filter, :outlier_filter]
 		filters.each do |filter|
 			# call appropriate filtering method if the filter in the static maintainable list
@@ -11,7 +11,7 @@ class QualityFiltering < ActiveRecord::Base
 	end
 
 	# Based on desired filters, call the specific filter function
-	def multiplex_to_filter(answers, filter)
+	def self.multiplex_to_filter(answers, filter)
 		case filter
 		when :threshold_filter
 			threshold = tag_prompt_deployment.answer_length_threshold
@@ -24,12 +24,12 @@ class QualityFiltering < ActiveRecord::Base
 	end
 
 	# Filter out all answers with comment length less than a set threshold
-	def apply_threshold_filter(answers, threshold)
+	def self.apply_threshold_filter(answers, threshold)
 		answers = answers.select{|answer| answer.comments.split(' ').length > threshold}
 	end
 
   # Filter out all answers which is the outlier in their group
-	def apply_outlier_filter(answers, threshold) 
+	def self.apply_outlier_filter(answers, threshold) 
     tag_prompt_deployments = TagPromptDeployment.where(id: self.tag_prompt_deployment_id)
     teams = Team.where(parent_id: tag_prompt_deployments.assignment_id)
     questions = Question.where(questionnaire_id: tag_prompt_deployments.questionnaire.id, type: tag_prompt_deployments.question_type)
