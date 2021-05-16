@@ -1,7 +1,7 @@
 
 require 'active_support/time_with_zone'
 
-class AssignmentForm
+class AssignmentForm < ApplicationRecord
   attr_accessor :assignment,
                 :assignment_questionnaires,
                 :due_dates,

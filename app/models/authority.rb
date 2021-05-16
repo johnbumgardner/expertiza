@@ -1,4 +1,4 @@
-class Authority
+class Authority < ApplicationRecord
   attr_reader :current_user
 
   def initialize(args = {})

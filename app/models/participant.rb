@@ -1,4 +1,4 @@
-class Participant < ActiveRecord::Base
+class Participant < ApplicationRecord
   has_paper_trail
   belongs_to :user
   belongs_to :topic, class_name: 'SignUpTopic', inverse_of: false
