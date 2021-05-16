@@ -17,16 +17,6 @@ GIT
       terminal-table (~> 1)
 
 GIT
-  remote: https://github.com/expertiza/authlogic.git
-  revision: d678b39a6d050a1804edc6ed16c025441a9a195b
-  specs:
-    expertiza-authlogic (3.4.6)
-      activerecord (>= 3.2)
-      activesupport (>= 3.2)
-      request_store (~> 1.0)
-      scrypt (>= 1.2, < 3.0)
-
-GIT
   remote: https://github.com/mimemagicrb/mimemagic.git
   revision: 01f92d86d15d85cfd0f20dabd025dcbd36a8a60f
   ref: 01f92d86d15d85cfd0f20dabd025dcbd36a8a60f
@@ -96,14 +86,19 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     ast (2.4.2)
+    authlogic (6.4.1)
+      activemodel (>= 5.2, < 6.2)
+      activerecord (>= 5.2, < 6.2)
+      activesupport (>= 5.2, < 6.2)
+      request_store (~> 1.0)
     awesome_nested_set (3.4.0)
       activerecord (>= 4.0.0, < 7.0)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
-    bind-it (0.2.7)
-      rjb (~> 1.4.3)
+    bind-it (0.2.6)
+      rjb
     bootstrap3-datetimepicker-rails (4.17.47)
       momentjs-rails (>= 2.8.1)
     builder (3.2.4)
@@ -447,7 +442,7 @@ GEM
     rgl (0.5.7)
       lazy_priority_queue (~> 0.1.0)
       stream (~> 0.5.3)
-    rjb (1.4.9)
+    rjb (1.6.4)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -485,6 +480,11 @@ GEM
       sexp_processor (~> 4.15, >= 4.15.1)
     rubyzip (2.3.0)
     rwordnet (2.0.0)
+    sass (3.7.4)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -498,9 +498,8 @@ GEM
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
-    scrypt (2.1.1)
-      ffi-compiler (>= 0.0.2)
-      rake
+    scrypt (3.0.7)
+      ffi-compiler (>= 1.0, < 2.0)
     seer (0.10.0)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -534,8 +533,8 @@ GEM
     sshkit (1.21.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    stanford-core-nlp (0.5.3)
-      bind-it (~> 0.2.7)
+    stanford-core-nlp (0.5.1)
+      bind-it (~> 0.2.5)
     stream (0.5.3)
       generator
     superfish-rails (1.6.0.1)
@@ -589,6 +588,7 @@ DEPENDENCIES
   activerecord-session_store
   activesupport
   airbrake
+  authlogic
   awesome_nested_set
   bind-it
   bootstrap3-datetimepicker-rails (~> 4.17.47)
@@ -609,7 +609,6 @@ DEPENDENCIES
   dynamic_form
   edavis10-ruby-web-search
   engtagger
-  expertiza-authlogic!
   factory_bot_rails
   fastercsv
   font-awesome-rails
@@ -645,6 +644,7 @@ DEPENDENCIES
   puma
   rails (~> 5.2.6)
   rails4-autocomplete
+  railties
   rake
   rb-readline
   react-rails
@@ -658,7 +658,8 @@ DEPENDENCIES
   rubocop
   rubyzip
   rwordnet
-  sass-rails
+  sass
+  sass-rails (= 6.0.0)
   scrypt
   seer
   selenium-webdriver
