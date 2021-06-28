@@ -70,7 +70,7 @@
 
                         <td>
                           <%- # If review is not submitted (is still being edited), show an 'Edit' link. -%>
-                          <% unless @latest_response.is_submitted %>
+                          <% if !@latest_response.is_submitted %>
                               <%= link_to "Edit", {:controller => 'response', :action => 'edit', :id => @latest_response.id} %>
 
                           <%- # If the submission has been updated since it was last reviewed, show an 'Update' link-%>
