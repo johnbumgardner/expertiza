@@ -13,7 +13,7 @@
     <%= render 'import_file/metareviewer' %>
 <% elsif @model == 'AssignmentParticipant' || @model == 'CourseParticipant' %>
     <%=  render 'import_file/participant' %>
-<% elsif @model == 'SignUpTopic' %>
+<% elsif @model == 'SignUpSheet' %>
   <%= render 'import_file/sign_up_topic' %>
 <% else %>
     <h3 style="color:red">There was a problem with the @model in app/views/import_file/show.html.erb. @model = <% @model %></h3>
