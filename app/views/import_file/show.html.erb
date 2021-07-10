@@ -16,7 +16,7 @@
 <% elsif @model == 'SignUpTopic' %>
   <%= render 'import_file/sign_up_topic' %>
 <% else %>
-    <h3 style="color:red">There was a problem with the @model in app/views/import_file/show.html.erb.</h3>
+    <h3 style="color:red">There was a problem with the @model in app/views/import_file/show.html.erb. @model = <% @model %></h3>
 <% end %>
 
 <a href="/import_file/start?expected_fields=<%= @expected_fields %>&model=<%= @model %>">Back</a>
